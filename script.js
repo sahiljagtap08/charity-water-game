@@ -165,6 +165,7 @@ class CharityWaterGame {
         this.startTimer();
         
         console.log(`Game started in ${this.difficultySettings[this.difficulty].name} mode!`);
+        console.log('Click on the falling water drops to collect them!');
     }
     
     resetGame() {
@@ -224,8 +225,21 @@ class CharityWaterGame {
         drop.style.left = Math.random() * (gameAreaRect.width - 40) + 'px';
         drop.style.animationDuration = `${this.difficultySettings[this.difficulty].dropSpeed}ms`;
         
-        // Add click event for collecting the drop
-        drop.addEventListener('click', (e) => this.collectDrop(e, dropId));
+        // Add click event for collecting the drop with better event handling
+        drop.addEventListener('click', (e) => {
+            console.log('Drop clicked!', dropId);
+            e.stopPropagation();
+            e.preventDefault();
+            this.collectDrop(e, dropId);
+        });
+        
+        // Add touchstart for mobile support
+        drop.addEventListener('touchstart', (e) => {
+            console.log('Drop touched!', dropId);
+            e.stopPropagation();
+            e.preventDefault();
+            this.collectDrop(e, dropId);
+        });
         
         this.elements.gameArea.appendChild(drop);
         this.drops.push({
@@ -233,16 +247,31 @@ class CharityWaterGame {
             element: drop,
             collected: false
         });
+        
+        console.log(`Drop spawned with ID: ${dropId}, total drops: ${this.drops.length}`);
     }
     
     collectDrop(event, dropId) {
         event.preventDefault();
+        event.stopPropagation();
+        
+        console.log(`Attempting to collect drop with ID: ${dropId}`);
         
         const dropIndex = this.drops.findIndex(drop => drop.id === dropId);
-        if (dropIndex === -1 || this.drops[dropIndex].collected) return;
+        if (dropIndex === -1) {
+            console.log(`Drop with ID ${dropId} not found in drops array`);
+            return;
+        }
+        
+        if (this.drops[dropIndex].collected) {
+            console.log(`Drop with ID ${dropId} already collected`);
+            return;
+        }
         
         const drop = this.drops[dropIndex];
         drop.collected = true;
+        
+        console.log(`Drop collected! Current score will be: ${this.score + 1}`);
         
         // Play collect sound
         this.playSound('collect');
@@ -262,7 +291,11 @@ class CharityWaterGame {
             if (drop.element && drop.element.parentNode) {
                 drop.element.remove();
             }
-            this.drops.splice(dropIndex, 1);
+            // Remove from drops array
+            const currentIndex = this.drops.findIndex(d => d.id === dropId);
+            if (currentIndex !== -1) {
+                this.drops.splice(currentIndex, 1);
+            }
         }, 300);
         
         console.log(`Drop collected! Score: ${this.score}`);
