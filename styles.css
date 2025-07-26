@@ -238,11 +238,13 @@ body {
         0 4px 8px rgba(0, 188, 212, 0.3),
         inset 0 2px 4px rgba(255, 255, 255, 0.3);
     animation: drop-fall linear;
-    z-index: 100;
+    z-index: 1000;
     pointer-events: auto;
     user-select: none;
-    /* Ensure the element remains clickable during animation */
-    animation-fill-mode: forwards;
+    /* Make sure it stays clickable throughout animation */
+    animation-fill-mode: none;
+    /* Add a subtle pulse to make it more obvious it's clickable */
+    animation: drop-fall linear, pulse 1s ease-in-out infinite alternate;
 }
 
 .water-drop::before {
@@ -275,6 +277,19 @@ body {
     }
     to {
         top: 520px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 
+            0 4px 8px rgba(0, 188, 212, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        box-shadow: 
+            0 6px 12px rgba(0, 188, 212, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.5);
     }
 }
 
