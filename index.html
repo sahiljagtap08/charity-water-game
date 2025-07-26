@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity: Water Drop Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="game-header">
+            <h1>💧 Charity: Water Drop Game</h1>
+            <p>Help collect water drops to bring clean water to communities in need!</p>
+        </header>
+
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <label for="difficulty">Choose Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy (Slower drops, 15 points to win)</option>
+                    <option value="normal" selected>Normal (Medium speed, 25 points to win)</option>
+                    <option value="hard">Hard (Fast drops, 40 points to win)</option>
+                </select>
+            </div>
+            <button id="startBtn" class="start-btn">Start Game</button>
+            <button id="pauseBtn" class="pause-btn" style="display: none;">Pause</button>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">Score:</span>
+                <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Target:</span>
+                <span id="target" class="stat-value">25</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Time:</span>
+                <span id="timer" class="stat-value">0s</span>
+            </div>
+        </div>
+
+        <div class="milestone-display" id="milestoneDisplay"></div>
+
+        <div id="gameArea" class="game-area">
+            <div class="instructions">
+                <h3>🎯 How to Play:</h3>
+                <ul>
+                    <li>Click the falling water drops to collect them</li>
+                    <li>Each drop gives you 1 point</li>
+                    <li>Reach your target score to win!</li>
+                    <li>Don't let too many drops fall to the bottom</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="gameOverModal" class="modal">
+            <div class="modal-content">
+                <h2 id="gameOverTitle">Game Over!</h2>
+                <p id="gameOverMessage"></p>
+                <div class="modal-buttons">
+                    <button id="playAgainBtn" class="btn btn-primary">Play Again</button>
+                    <button id="changeDifficultyBtn" class="btn btn-secondary">Change Difficulty</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <div class="footer-content">
+            <p>💧 Learn more about providing clean water to communities in need:</p>
+            <div class="footer-links">
+                <a href="https://charitywater.org" target="_blank" rel="noopener noreferrer">Visit Charity: Water</a>
+                <a href="https://charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate Now</a>
+            </div>
+            <p class="footer-note">Every $40 can provide one person with clean and safe drinking water.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
